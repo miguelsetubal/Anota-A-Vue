@@ -1,5 +1,6 @@
 <template>
 <div class="home">
+  <Seguranca/>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Usuários Cadastrados</h1>
        
@@ -8,6 +9,7 @@
         <table class="table table-dark" id="alter">
             <thead class="table">
                 <tr>
+                   <th scope="col">ID</th>
                     <th scope="col">Nome</th>
                     <th scope="col">CPF</th>
                     <th scope="col">Telefone</th>
@@ -18,6 +20,7 @@
             </thead>
             <tbody>
                 <tr v-for="cliente in clientes" :key="cliente.id">
+                   <td>{{cliente.id}}</td>
                     <th scope="row">{{cliente.nome}}</th>
                     <td>{{cliente.cpf}}</td>
                     <td>{{cliente.telefone}}</td>
@@ -27,7 +30,7 @@
                 </tr>                
             </tbody>
         </table>
-        <router-link to="/"> <a class="btn btn-outline-color"  role="button">Voltar</a></router-link>
+        <router-link to="/home/funcionario"> <a class="btn btn-outline-color"  role="button">Voltar</a></router-link>
     
     </div>
     <br><br><br><br><br><br><br><br><br><br><br>
@@ -35,8 +38,12 @@
 </template>
 
 <script>
+import Seguranca from '@/components/segurancaFuncionario.vue'
 export default {
   name: "Clientes",
+  components: {    
+    Seguranca
+  },
   data() {
     return {      
       clientes: [],

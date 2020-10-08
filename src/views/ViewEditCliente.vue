@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-<div class="row">
-    <div class="container">     
+    <div class="row">
+      <div class="container">
         <div class="card card-signin my-5">
           <div class="card-body">
             <form>
               <div class="row">
                 <div class="col-md-12">
-                  <h4 class="no-margin">Cadastro de Usuário</h4>
+                  <h4 class="no-margin">Suas Informações</h4>
                   <hr />
                 </div>
 
@@ -88,13 +88,13 @@
                     <option value="Sistemas de Informação"
                       >Sistemas de Informação</option
                     >
-                    <option value="Sem curso"
-                      >Sem curso</option
-                    >
+                    <option value="Sem curso">Sem curso</option>
                   </select>
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="periodo" class="control-label">Periodo (sem curso, informe 99)* </label>
+                  <label for="periodo" class="control-label"
+                    >Periodo (sem curso, informe 99)*
+                  </label>
                   <input
                     type="number"
                     class="form-control"
@@ -146,29 +146,12 @@
               <p class="aviso">Os dados marcados com (*) são obrigatórios.</p>
 
               <div class="btn1">
-                <button
-                  class="btn btn-lg btn-block button-color"
-                  type="button"
+                <button class="btn btn-lg btn-block button-color" type="button"
                   @click="insertUsuario"
                 >
                   Cadastrar</button
                 ><br />
-              </div>
-
-              <div class="btn-group div-size-large">
-                <div class="div-size-small href">
-                <router-link to="/login"><a href="" class="btn btn-lg btn-block button-color">Login</a></router-link>
-                </div>
-
-                <div class="div-size-small btn2">
-                  <button
-                    class="btn btn-lg btn-block button-color"
-                    type="reset"
-                  >
-                    Limpar Campos
-                  </button>
-                </div>
-              </div>
+              </div>              
 
               <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
             </form>
@@ -215,9 +198,13 @@ export default {
         alert("Nome muito curto! Deve ter no minino 10 letras!");
       } else if (this.senha.length < 8) {
         alert("Senha muito curta, minimo 8 digitos");
-      } else if(this.telefone.length < 11){
-      alert("Telefone inválido! Ex de Formato: 88955555555");
-      }else if(this.matricula == "" || this.periodo =="" || this.curso == ""){
+      } else if (this.telefone.length < 11) {
+        alert("Telefone inválido! Ex de Formato: 88955555555");
+      } else if (
+        this.matricula == "" ||
+        this.periodo == "" ||
+        this.curso == ""
+      ) {
         alert("Informações obrigatórias não foram preenchidas!");
       } else if (this.senha != this.csenha) {
         alert(
@@ -255,10 +242,10 @@ export default {
         alert("Preencha o campo E-mail corretamente");
       } else {
         this.$http.post(this.baseURI, obj).then(result => {
-           if (result.data != "") {
-          alert("Cadastro realizado com sucesso!");
+          if (result.data != "") {
+            alert("Cadastro realizado com sucesso!");
             this.$router.push({ name: "Clientes" });
-           }
+          }
         });
       }
     }

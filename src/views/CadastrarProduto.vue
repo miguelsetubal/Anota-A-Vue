@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+      <Seguranca/>
         <div class="row">
             <div class="col-sm-15 col-md-13 col-lg-9 mx-auto">
                 <div class="card card-signin my-5">
@@ -25,7 +26,7 @@
                             </div>
                                 <div class="btn-group div-size-large">
                                     <div class="div-size-small div-href"> 
-                                        <router-link to="/"><a class="btn btn-lg btn-block button-color">Menu Principal</a></router-link>
+                                        <router-link to="/home/funcionario"><a class="btn btn-lg btn-block button-color">Menu Principal</a></router-link>
                                 </div>
                                 <div class="div-size-small div-btn2">
                                     <button class="btn btn-lg btn-block button-color" type="reset" >Limpar Campos</button>   
@@ -42,8 +43,12 @@
 </template>
 
 <script>
+import Seguranca from '@/components/segurancaFuncionario.vue'
 export default {
   name: "CadProduto",
+  components: {    
+    Seguranca
+  },
   data: function() {
     return {
       descricao: "",

@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Seguranca/>
     <br/>
     <br/>
     <br/>
@@ -35,7 +36,7 @@
           </tbody>
         </table>
        <router-link to="/funcionarios/insert"> <a class="btn btn-outline-color"  role="button">Cadastrar novo funcionário</a></router-link>
-       <router-link to="/"> <a class="btn btn-outline-color" role="button">Voltar ao menu principal</a></router-link>
+       <router-link to="/home/funcionario"> <a class="btn btn-outline-color" role="button">Voltar ao menu principal</a></router-link>
         <br><br><br><br><br><br><br><br><br><br><br>
       </div>
     </div>
@@ -43,8 +44,12 @@
 </template>
 
 <script>
+import Seguranca from '@/components/segurancaFuncionario.vue'
 export default {
   name: "Users",
+  components: {    
+    Seguranca
+  },
   data() {
     return {      
       users: [],

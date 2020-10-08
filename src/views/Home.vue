@@ -1,5 +1,6 @@
 <template>
-  <div class="home" >  
+  <div class="home" > 
+      <Seguranca/>
       <NavBar/> 
      <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4" >Bem Vindo!!!</h1>
@@ -64,12 +65,15 @@
 // @ is an alias to /src
 import NavBar from '@/components/navbar.vue'
 import Footer from '@/components/Footer.vue'
+import Seguranca from '@/components/segurancaFuncionario.vue'
 export default {
   name: 'Home',
   components: {
     NavBar,
-    Footer
-  }
+    Footer,
+    Seguranca
+  },
+  
 }
 </script>
 <style>

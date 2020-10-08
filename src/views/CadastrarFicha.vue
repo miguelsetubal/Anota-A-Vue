@@ -1,5 +1,6 @@
 <template>
 <div class="home">
+    <Seguranca/>
 <div class="row">
 <div class="container">
     <br><br><br><br><br>
@@ -19,10 +20,9 @@
                         <div class="form-group col-md-12 ">
                             <label for="cliente" class="control-label">Cliente*</label>
                             <select name="cliente" class="form-control" id="cliente" required>
-                                <option></option>
-                                <option value='Miguel Jonas Lima Setúbal'>Miguel Jonas Lima Setúbal</option>
-                                <option value='Isa Raquel Costas de Freitas'>Isa Raquel Costas de Freitas</option>
-                                <option value='Francisca Isabelle de Almeida Cruz'>Francisca Isabelle de Almeida Cruz</option>
+                                <option>-----------Escolha um Cliente-----------</option>
+                                <option v-for="cliente in clientes" :key="cliente.id" v-bind:value="cliente.id">{{cliente.nome}}</option>
+                               
                                 
                             </select>
                         </div>
@@ -37,7 +37,7 @@
 
                     <div class="btn-group div-size-large">
                         <div class="div-size-small href">
-                             <router-link to="/"><a class="btn btn-lg btn-block button-color">Menu Principal</a></router-link>
+                             <router-link to="/home/funcionario"><a class="btn btn-lg btn-block button-color">Menu Principal</a></router-link>
                         </div>
 
                         <div class="div-size-small btn2">
@@ -53,6 +53,32 @@
 </div>
 </div>
 </template>
+
+<script>
+import Seguranca from '@/components/segurancaFuncionario.vue'
+export default {
+  name: "CadastrarFicha",
+  components: {    
+    Seguranca
+  },
+  data() {
+    return {      
+      clientes: [],
+      baseURI: "http://localhost:8080/server-anotaai/api/clientes",
+    };
+  },
+  created: function() {
+    this.getAllClientes();
+  },
+  methods: {
+    getAllClientes: function() {
+      this.$http.get(this.baseURI).then((result) => {
+        this.clientes = result.data;
+      });
+    },
+  },
+};
+</script>
 
 <style scoped>
 .home{

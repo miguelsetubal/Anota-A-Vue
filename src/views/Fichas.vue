@@ -61,7 +61,7 @@
           </div>
         </div>
       </div>
-     <router-link to="/"> <a class="btn btn-outline-color"  role="button">Voltar</a></router-link>
+     <router-link to="/home/funcionario"> <a class="btn btn-outline-color"  role="button">Voltar</a></router-link>
       <footer class="pt-4 my-md-5 pt-md-5 border-top"></footer>
     </div>
   </div>

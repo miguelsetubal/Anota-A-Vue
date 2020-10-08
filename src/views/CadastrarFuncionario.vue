@@ -1,4 +1,7 @@
 <template>
+<div class="home">
+  <Seguranca/>
+<div class="row">
   <div class="container">
     <div class="card card-signin my-5">
       <div class="card-body">
@@ -86,7 +89,7 @@
 
           <div class="btn-group div-size-large">
             <div class="div-size-small href">
-              <router-link to="/"
+              <router-link to="/home/funcionario"
                 ><a class="btn btn-lg btn-block button-color"
                   >Menu Principal</a
                 ></router-link
@@ -105,11 +108,17 @@
       </div>
     </div>
   </div>
+</div>
+</div>
 </template>
 
 <script>
+import Seguranca from '@/components/segurancaFuncionario.vue'
 export default {
   name: "CadFuncionario",
+  components: {    
+    Seguranca
+  },
   data: function() {
     return {
       nome: "",
@@ -181,6 +190,9 @@ export default {
 </script>
 
 <style>
+.home{
+  background-image: url(../../img/bg.jpg); 
+}
 .form-signin {
   width: 100%;
   max-width: 330px;

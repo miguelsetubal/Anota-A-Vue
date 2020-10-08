@@ -15,7 +15,7 @@
                                 @click="postLogin">Entrar</button>
                                 <br>
                             <router-link to="/clientes/insert">Não tem uma conta? Cadastre-se aqui!</router-link>
-                            <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
+                            <p class="mt-5 mb-3 text-muted">Anota-aí &copy; 2020</p>
                         </form>
                     </div>
                 </div>
@@ -48,8 +48,16 @@ export default {
 
       this.$http.post(this.baseURI, obj).then((result) => {
         if (result.data != "") {
-          localStorage.setItem("user", JSON.stringify(result.data));         
-          this.$router.push({ name: "Home" });
+          localStorage.setItem("user", JSON.stringify(result.data)); 
+          const obj = JSON.parse(localStorage.getItem("user"));
+          if(obj.acesso == 1){
+            this.$router.push({ name: "Home" });
+          }else if(obj.acesso == 2){
+            this.$router.push({ name: "HomeCliente" });
+          }else{
+            alert("Usuário não permitido pelo Sistema");
+          }     
+          
         } else {
           alert("E-mail ou Senha incorretos!");
         }

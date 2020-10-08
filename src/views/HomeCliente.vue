@@ -1,5 +1,6 @@
 <template>
 <div class="home">
+      <Seguranca/> 
      <NavBarCliente/> 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Bem Vindo!!!</h1>
@@ -24,7 +25,7 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled mt-3 mb-4">
-                        <li><a href="editar_user.html">Alterar Dados</a></li>                        
+                         <router-link to="/cliente/edit"><li><a href="">Alterar Dados</a></li></router-link>                   
                     </ul>
                 </div>
             </div>            
@@ -89,13 +90,16 @@
 // @ is an alias to /src
 import NavBarCliente from '@/components/NavBarCliente.vue'
 import Footer from '@/components/Footer.vue'
+import Seguranca from '@/components/segurancaCliente.vue'
 
 export default {
   name: 'HomeCliente',
   components: {
     NavBarCliente,
-    Footer
-  }
+    Footer,
+    Seguranca
+  },
+    
 }
 </script>
 <style>

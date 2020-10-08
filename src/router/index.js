@@ -11,13 +11,18 @@ import Produtos from '../views/Produtos.vue'
 import Funcionarios from '../views/Funcionarios.vue'
 import Fichas from '../views/Fichas.vue'
 import Clientes from '../views/Clientes.vue'
+import ViewEditCliente from '../views/ViewEditCliente.vue'
 
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: "*",
+    component: Login,
+  },
+  {
+    path: '/home/funcionario',
     name: 'Home',
     component: Home
   },
@@ -70,7 +75,13 @@ const routes = [
     path: '/clientes',
     name: 'Clientes',
     component: Clientes
+  },
+  {
+    path: '/cliente/edit',
+    name: 'ViewEditCliente',
+    component: ViewEditCliente
   }
+  
 ]
 
 const router = new VueRouter({
