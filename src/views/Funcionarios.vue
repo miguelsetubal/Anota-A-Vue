@@ -1,12 +1,16 @@
 <template>
   <div class="home">
-    <Seguranca/>
+   <Seguranca/>
     <br/>
     <br/>
     <br/>
+    
     <h1 class="display-4">Funcionários Cadastrados</h1>
+    
     <div class="row">
+      
       <div class="container">
+        
         <table class="table table-dark" id="alter">
           <thead class="table">
             <tr>
@@ -25,22 +29,30 @@
               <td>{{user.cpf}}</td>
               <td>
                 <div class="btn-group">
-                  <a class="btn-icon" href="#"><i class="fa fa-trash"></i></a>
-                  <a class="btn-icon" href="home_editar_func.html"
-                    ><i class="fa fa-edit"></i
-                  ></a>
+                 <button class="btn-icon" @click="deleteUserById(user.id)"><i class="fa fa-trash"></i></button>
+                  <button class="btn-icon" @click="$router.push({ name: 'FuncEdit', params: { id: user.id } })"><i class="fa fa-edit"></i></button>
                 </div>
               </td>
             </tr>        
            
           </tbody>
         </table>
+        
        <router-link to="/funcionarios/insert"> <a class="btn btn-outline-color"  role="button">Cadastrar novo funcionário</a></router-link>
        <router-link to="/home/funcionario"> <a class="btn btn-outline-color" role="button">Voltar ao menu principal</a></router-link>
-        <br><br><br><br><br><br><br><br><br><br><br>
+     
       </div>
+      <div class="form-group col-md-12">
+         <br>
+          <input type="text" class="form-control"  placeholder="Buscar por CPF" v-model="cpf" />
+          <button class="btn btn-outline-color" @click="fetchFuncByCPF">Buscar</button>
+          <button class="btn btn-outline-color" @click="getAllFuncionarios">Todos</button>
+           <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+        </div>
     </div>
+    
   </div>
+  
 </template>
 
 <script>
@@ -53,7 +65,7 @@ export default {
   data() {
     return {      
       users: [],
-      baseURI: "http://localhost:8080/server-anotaai/api/users",
+      baseURI: "http://localhost:8080/api/users",
     };
   },
   created: function() {
@@ -64,6 +76,24 @@ export default {
       this.$http.get(this.baseURI).then((result) => {
         this.users = result.data;
       });
+    },
+    deleteUserById: function(id) {
+      this.$http.delete(this.baseURI + "/" + id).then((result) => {
+        alert("Funcionario excluido com sucesso!")
+        this.getAllFuncionarios();
+      });
+    },
+    fetchFuncByCPF: function() {
+      this.$http
+        .get(this.baseURI + "/search?cpf=" + this.cpf)
+        .then(result => {
+          this.users = result.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+        
+        
     },
   },
 };

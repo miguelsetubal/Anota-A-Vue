@@ -8,7 +8,7 @@
         <form>
           <div class="row">
             <div class="col-md-12">
-              <h4 class="no-margin">Cadastro de Produtos</h4>
+              <h4 class="no-margin">Editar Produto</h4>
               <hr />
             </div>
 
@@ -19,7 +19,7 @@
                 id="nome"
                 class="form-control"
                 name="nome"
-                v-model="descricao"
+                v-model="produto.descricao"
                 required
               />
             </div>
@@ -32,7 +32,7 @@
                 id="cpf"
                 class="form-control"
                 name="cpf"
-                v-model="valor"
+                v-model="produto.valor"
                 required
               />
             </div>
@@ -41,17 +41,20 @@
           <p class="aviso">Os dados marcados com (*) são obrigatórios.</p>
 
           <div class="btn1">
-            <button class="btn btn-lg btn-block button-color" type="button" @click="insertProdutos"
+            <button
+              class="btn btn-lg btn-block button-color"
+              type="button"
+              @click="editProduto"
             >
-              Cadastrar</button
+              Salvar Edição</button
             ><br />
           </div>
 
           <div class="btn-group div-size-large">
             <div class="div-size-small href">
-              <router-link to="/home/funcionario"
+              <router-link to="/produtos"
                 ><a class="btn btn-lg btn-block button-color"
-                  >Menu Principal</a
+                  >Cancelar</a
                 ></router-link
               >
             </div>
@@ -75,34 +78,40 @@
 <script>
 import Seguranca from '@/components/segurancaFuncionario.vue'
 export default {
-  name: "CadProduto",
+  name: "EditProduto",
+  props: ["id"],
   components: {    
     Seguranca
   },
   data: function() {
     return {
-      descricao: "",
-      valor: "",      
+      produto: {},     
       baseURI: "http://localhost:8080/api/produtos",
     };
   },
+  created: function() {
+    this.$http
+      .get(this.baseURI + "/" + this.id)
+      .then((result) => {
+        this.produto = result.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  },
   methods: {
-    insertProdutos: function() {
+    editProduto: function() {
       let obj = {
-        descricao: this.descricao,
-        valor: this.valor,
+        descricao: this.produto.descricao,
+        valor: this.produto.valor,
         
       };
-      if(this.valor <= 0 || this.descricao.length <3){
+     if(this.produto.valor <= 0 || this.produto.descricao.length <3){
         alert("Preço não pode ser R$0 ou -R$. A descrição deve ter no minino 3 letras!");
       }else{
-      this.$http.post(this.baseURI, obj).then((result) => {
-        if (result.data != "") {
-          alert("Cadastro realizado com sucesso!");
-          this.$router.push({ name: 'Produtos'});
-        }else{
-          alert("Aconteceu um erro ao tentar salvar as informações, tente novamente!");
-        }
+      this.$http.put(this.baseURI + "/" + this.id, obj).then((result) => {
+          alert("Produto editado com sucesso");
+        this.$router.push({ name: 'Produtos'});
       });
       }
     },

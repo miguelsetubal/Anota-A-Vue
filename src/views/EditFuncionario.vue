@@ -8,7 +8,7 @@
         <form>
           <div class="row">
             <div class="col-md-12">
-              <h4 class="no-margin">Cadastro de Funcionários</h4>
+              <h4 class="no-margin">Editar Funcionário</h4>
               <hr />
             </div>
 
@@ -19,7 +19,7 @@
                 id="nome"
                 class="form-control"
                 name="nome"
-                v-model="nome"
+                v-model="func.nome"
                 required
               />
             </div>
@@ -32,7 +32,7 @@
                 id="cpf"
                 class="form-control"
                 name="cpf"
-                v-model="cpf"
+                v-model="func.cpf"
                 required
               />
             </div>
@@ -46,7 +46,7 @@
                 class="form-control"
                 name="email"
                 id="email"
-                v-model="email"
+                v-model="func.email"
                 required
               />
             </div>
@@ -57,7 +57,7 @@
                 class="form-control"
                 name="senha"
                 id="senha"
-                v-model="senha"
+                v-model="func.senha"
                 required
               />
             </div>
@@ -81,17 +81,17 @@
             <button
               class="btn btn-lg btn-block button-color"
               type="button"
-              @click="insertFuncionario"
+              @click="editFuncionario"
             >
-              Cadastrar</button
+              Salvar</button
             ><br />
           </div>
 
           <div class="btn-group div-size-large">
             <div class="div-size-small href">
-              <router-link to="/home/funcionario"
+              <router-link to="/funcionarios"
                 ><a class="btn btn-lg btn-block button-color"
-                  >Menu Principal</a
+                  >Voltar</a
                 ></router-link
               >
             </div>
@@ -115,79 +115,82 @@
 <script>
 import Seguranca from '@/components/segurancaFuncionario.vue'
 export default {
-  name: "CadFuncionario",
+  name: "EditFuncionario",
+   props: ["id"],
   components: {    
     Seguranca
   },
   data: function() {
     return {
-      nome: "",
-      email: "",
-      senha: "",
-      csenha: "",
-      acesso: 1,
-      cpf: "",
+      func: {},
       baseURI: "http://localhost:8080/api/users"
     };
   },
-  methods: {
-    insertFuncionario: function() {
+  created: function() {
+    this.$http
+      .get(this.baseURI + "/" + this.id)
+      .then((result) => {
+        this.func = result.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  },
+   methods: {
+    editFuncionario: function() {
       let obj = {
-        nome: this.nome,
-        email: this.email,
-        senha: this.senha,
-        acesso: this.acesso,
-        cpf: this.cpf
+        nome: this.func.nome,
+        cpf: this.func.cpf,
+        email: this.func.email,
+        senha: this.func.senha,
+        acesso: 1,
+        
       };
-      if (this.nome.length < 10) {
+
+      if (this.func.nome.length < 10) {
         alert("Nome muito curto! Deve ter no minino 10 letras!");
-      } else if (this.senha.length < 8) {
+      } else if (this.func.senha.length < 8) {
         alert("Senha muito curta, minimo 8 digitos");
-      } else if (this.senha != this.csenha) {
+      } else if (this.func.senha != this.csenha) {
         alert(
           "Senhas não coincidem! Assegure-se de que os campos Senha e Confirmar senha coincidem exatamente"
         );
       } else if (
-        this.cpf == "" ||
-        this.cpf.length < 11 ||
-        this.cpf == "00000000000" ||
-        this.cpf == "11111111111" ||
-        this.cpf == "22222222222" ||
-        this.cpf == "33333333333" ||
-        this.cpf == "44444444444" ||
-        this.cpf == "55555555555" ||
-        this.cpf == "66666666666" ||
-        this.cpf == "77777777777" ||
-        this.cpf == "88888888888" ||
-        this.cpf == "99999999999") {
+        this.func.cpf.length < 11 ||
+        this.func.cpf == "00000000000" ||
+        this.func.cpf == "11111111111" ||
+        this.func.cpf == "33333333333" ||
+        this.func.cpf == "44444444444" ||
+        this.func.cpf == "55555555555" ||
+        this.func.cpf == "66666666666" ||
+        this.func.cpf == "77777777777" ||
+        this.func.cpf == "88888888888" ||
+        this.func.cpf == "99999999999") {
         alert("CPF Inválido");
         add = 0;
         for (i = 0; i < 9; i++) {
-          add += parseInt(this.cpf.charAt(i)) * (10 - i);
+          add += parseInt(this.func.cpf.charAt(i)) * (10 - i);
         }
         dig1 = (add * 10) % 11;
         add = 0;
         for (i = 0; i < 10; i++) {
-          add += parseInt(this.cpf.charAt(i)) * (11 - i);
+          add += parseInt(this.func.cpf.charAt(i)) * (11 - i);
         }
         dig2 = (add * 10) % 11;
-        if (this.cpf.charAt("9") != dig1 && this.cpf.charAt("10") != dig2) {
+        if (this.func.cpf.charAt("9") != dig1 && this.cpf.charAt("10") != dig2) {
           alert("CPF inválido.");
         }
-        }else if(this.email.length == 0 || this.email.indexOf('@') == -1){
+        }else if(this.func.email.length == 0 || this.func.email.indexOf('@') == -1){
            alert("Preencha o campo E-mail corretamente")
-        } else {
-        this.$http.post(this.baseURI, obj).then(result => {
-          if (result.data != "") {
-            alert("Cadastro realizado com sucesso!");
-            this.$router.push({ name: "Funcionarios" });
-          }else{
-            alert("Aconteceu um erro ao tentar salvar as informações, tente novamente!");
-          }
-        });
-      }
-    }
-  }
+        }else{
+
+      this.$http.put(this.baseURI + "/" + this.id, obj).then((result) => {
+          alert("Funcionário editado com sucesso");
+        this.$router.push({ name: 'Funcionarios'});
+      });
+        }
+    },
+  },
 };
 </script>
 

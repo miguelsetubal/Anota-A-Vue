@@ -19,9 +19,9 @@
 
                         <div class="form-group col-md-12 ">
                             <label for="cliente" class="control-label">Cliente*</label>
-                            <select name="cliente" class="form-control" id="cliente" required>
+                            <select name="cliente" class="form-control" v-model="id_cliente" id="cliente" required>
                                 <option>-----------Escolha um Cliente-----------</option>
-                                <option v-for="cliente in clientes" :key="cliente.id" v-bind:value="cliente.id">{{cliente.nome}}</option>
+                                <option v-for="cliente in clientes" :key="cliente.id" v-bind:value="cliente.id">{{cliente.user.nome}}</option>
                                
                                 
                             </select>
@@ -32,7 +32,7 @@
 
                     <div class="btn1">
                         <button class="btn btn-lg btn-block button-color" type="button"
-                            onclick="abrir_ficha()">Abrir Ficha</button>
+                            @click="insertFicha">Abrir Ficha</button>
                     </div>
 
                     <div class="btn-group div-size-large">
@@ -62,9 +62,13 @@ export default {
     Seguranca
   },
   data() {
-    return {      
-      clientes: [],
-      baseURI: "http://localhost:8080/server-anotaai/api/clientes",
+    return {    
+    clientes: [],  
+      id_cliente: "",
+      id_user: "",
+      data: "",
+      baseURI: "http://localhost:8080/api/clientes",
+      baseURI2: "http://localhost:8080/api/fichas",
     };
   },
   created: function() {
@@ -76,6 +80,24 @@ export default {
         this.clientes = result.data;
       });
     },
+    insertFicha: function(){       
+        const user = JSON.parse(localStorage.getItem("user"));
+        var data = new Date();
+        
+        let obj = {
+            id_cliente: this.id_cliente,
+            id_user: user.id,
+            data: data
+        };
+        this.$http.post(this.baseURI2, obj).then((result) => {
+        if (result.data != "") {
+          alert("Cadastro realizado com sucesso!");
+          this.$router.push({ name: 'Fichas'});
+        }else{
+          alert("Aconteceu um erro ao tentar salvar as informações, tente novamente!");
+        }
+      });
+    }
   },
 };
 </script>

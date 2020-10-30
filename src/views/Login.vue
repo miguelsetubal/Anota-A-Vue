@@ -4,13 +4,15 @@
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5">
                     <div class="card-body">
-                        <form class="form-signin">
+                        <form class="">
+                          <br>
                             <img class="mb-4" src="../../img/logo.png" alt="" height="75">
                             <h1 class="h3 mb-3 font-weight-normal">Login</h1>
-                            <label for="inputEmail" class="sr-only">Email</label>
-                            <input type="email" id="email" v-model="login" class="form-control" placeholder="Email" required autofocus>
+                            <label for="inputEmail" class="sr-only">Email</label>                            
+                            <input type="email" id="email" v-model="email" class="form-control" placeholder="Email" required autofocus>
                             <label for="inputPassword" class="sr-only">Senha</label>
-                            <input type="password" v-model="password" id="senha" class="form-control" placeholder="Senha" required>
+                            <input type="password" v-model="senha" id="senha" class="form-control" placeholder="Senha" required>
+                            <br>
                             <button class="btn btn-lg btn-primary btn-block" type="button"
                                 @click="postLogin">Entrar</button>
                                 <br>
@@ -20,8 +22,11 @@
                     </div>
                 </div>
             </div>
+           
         </div>
+         <br><br>
     </div>    
+    
 </template>
 
 <script>
@@ -29,9 +34,9 @@ export default {
   name: "Login",
   data() {
     return {
-      login: "",
-      password: "",
-      baseURI: "http://localhost:8080/server-anotaai/api/users/login",
+      email: "",
+      senha: "",
+      baseURI: "http://localhost:8080/api/users/login",
     };
   },
   created: function() {
@@ -42,8 +47,8 @@ export default {
   methods: {
     postLogin: function() {
       let obj = {
-        login: this.login,
-        password: this.password,
+        email: this.email,
+        senha: this.senha,
       };
 
       this.$http.post(this.baseURI, obj).then((result) => {

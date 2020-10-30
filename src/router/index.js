@@ -12,6 +12,8 @@ import Funcionarios from '../views/Funcionarios.vue'
 import Fichas from '../views/Fichas.vue'
 import Clientes from '../views/Clientes.vue'
 import ViewEditCliente from '../views/ViewEditCliente.vue'
+import ProdutoEdit from '../views/EditProduto.vue'
+import FuncEdit from '../views/EditFuncionario.vue'
 
 
 Vue.use(VueRouter)
@@ -80,8 +82,19 @@ const routes = [
     path: '/cliente/edit',
     name: 'ViewEditCliente',
     component: ViewEditCliente
-  }
-  
+  },
+  {
+    path: "/produtos/edit/:id",
+    name: "ProdutoEdit",
+    component: ProdutoEdit,
+    props: true
+  },
+  {
+    path: "/funcionarios/edit/:id",
+    name: "FuncEdit",
+    component: FuncEdit,
+    props: true
+  },
 ]
 
 const router = new VueRouter({

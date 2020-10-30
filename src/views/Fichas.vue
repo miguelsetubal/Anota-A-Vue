@@ -17,49 +17,21 @@
     </div>
 
     <div class="container">
-      <div class="card-deck mb-3 text-center">
-        <div class="card mb-4 box-shadow">
+      <div class="card-deck mb-3 text-center">        
+        <div class="card mb-4 box-shadow" v-for="ficha in fichas" :key="ficha.id">
           <a href="ficha_add.html">
             <div class="card-header">
-              <h4 class="my-0 font-weight-normal">Nº 01</h4>
+              <h4 class="my-0 font-weight-normal">Nº {{ficha.id}}</h4>
             </div>
           </a>
           <div class="card-body">
             <ul class="list-unstyled mt-3 mb-4">
-              <li><strong>Miguel Jonas Lima Setúbal</strong></li>
-              <li>Curso: SI</li>
-              <li>Matricula: 010101</li>
+              <li><strong>{{ficha.id_cliente}}</strong></li>
+              <li>{{ficha.data}}</li>
+              <li></li>
             </ul>
           </div>
-        </div>
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <a href="ficha_add.html"
-              ><h4 class="my-0 font-weight-normal">Nº 02</h4></a
-            >
-          </div>
-          <div class="card-body">
-            <ul class="list-unstyled mt-3 mb-4">
-              <li><strong>Isa Raquel Costa de Freitas</strong></li>
-              <li>Curso: SI</li>
-              <li>Matricula: 020202</li>
-            </ul>
-          </div>
-        </div>
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <a href="ficha_add.html"
-              ><h4 class="my-0 font-weight-normal">Nº 03</h4></a
-            >
-          </div>
-          <div class="card-body">
-            <ul class="list-unstyled mt-3 mb-4">
-              <li><strong>Francisca Isabelle de Alemida Cruz</strong></li>
-              <li>Curso: SI</li>
-              <li>Matricula: 030303</li>
-            </ul>
-          </div>
-        </div>
+        </div> 
       </div>
      <router-link to="/home/funcionario"> <a class="btn btn-outline-color"  role="button">Voltar</a></router-link>
       <footer class="pt-4 my-md-5 pt-md-5 border-top"></footer>
@@ -67,6 +39,32 @@
   </div>
   </div>
 </template>
+
+<script>
+import Seguranca from '@/components/segurancaFuncionario.vue'
+export default {
+  name: "Fichas",
+  components: {    
+    Seguranca
+  },
+  data() {
+    return {      
+      fichas: [],
+      baseURI: "http://localhost:8080/api/fichas",
+    };
+  },
+  created: function() {
+    this.getAllFicha();
+  },
+  methods: {
+    getAllFicha: function() {
+      this.$http.get(this.baseURI).then((result) => {
+        this.fichas = result.data;
+      });
+    },    
+  },
+};
+</script>
 <style scoped>
 .container {
   max-width: 960px;

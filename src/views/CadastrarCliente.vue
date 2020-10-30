@@ -195,21 +195,24 @@ export default {
       curso: "",
       periodo: "",
 
-      baseURI: "http://localhost:8080/server-anotaai/api/clientes"
+      baseURI: "http://localhost:8080/api/clientes"
     };
   },
   methods: {
     insertUsuario: function() {
-      let obj = {
+      let users = {
         nome: this.nome,
         email: this.email,
         senha: this.senha,
         acesso: this.acesso,
-        cpf: this.cpf,
+        cpf: this.cpf
+      };
+      let obj = {        
         telefone: this.telefone,
         matricula: this.matricula,
         curso: this.curso,
-        periodo: this.periodo
+        periodo: this.periodo,
+        user: users
       };
       if (this.nome.length < 10) {
         alert("Nome muito curto! Deve ter no minino 10 letras!");
@@ -257,7 +260,7 @@ export default {
         this.$http.post(this.baseURI, obj).then(result => {
            if (result.data != "") {
           alert("Cadastro realizado com sucesso!");
-            this.$router.push({ name: "Clientes" });
+            this.$router.push({ name: "Login" });
            }
         });
       }

@@ -178,7 +178,7 @@ export default {
       curso: "",
       periodo: "",
 
-      baseURI: "http://localhost:8080/server-anotaai/api/clientes"
+      baseURI: "http://localhost:8080/api/clientes"
     };
   },
   methods: {
